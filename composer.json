@@ -1,5 +1,5 @@
 {
-    "name": "yyq/minimalist_frame",
+    "name": "yyq/minimum_frame",
     "description": "一个极简单的、面向过程的、以 json 为输入输出的 php 框架",
     "license": "MIT",
     "authors": [

@@ -6,7 +6,7 @@
 // date: 2018-01-02
 // 默认日志文件路径在 /tmp/phplogs/ 目录下
 
-namespace minimalist_frame;
+namespace minimum_frame;
 
 class YLog
 {

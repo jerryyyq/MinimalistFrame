@@ -33,9 +33,9 @@
 *
 */
 
-use minimalist_frame\YLog;
-use minimalist_frame\YMySql;
-use minimalist_frame\YMemcache;
+use minimum_frame\YLog;
+use minimum_frame\YMySql;
+use minimum_frame\YMemcache;
 
 require_once('YLog.php');
 require_once('YMySql.php');

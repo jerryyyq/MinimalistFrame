@@ -1,5 +1,5 @@
-# minimalist_frame
-一个极简单的、面向过程的、以 json 为输入输出的 php 框架。 在 yyq_minimalist_frame 基础上做了基础组件对象化，并且将配置文件从组件中剥离了出来。
+# minimum_frame
+一个极简单的、面向过程的、以 json 为输入输出的 php 框架。 在 yyq_minimum_frame 基础上做了基础组件对象化，并且将配置文件从组件中剥离了出来。
 
 * 包含的功能如下：
   * 数据库支持
@@ -12,7 +12,7 @@
   * password 标准生成方法
   * 以 json 封装的统一格式的输入与输出
 
-* composer 注册在： https://packagist.org/packages/yyq/minimalist_frame
+* composer 注册在： https://packagist.org/packages/yyq/minimum_frame
 
 ## URL 调用接口
 一个 location 支持多个 api 调用，调用的 api 名称由 URL 参数 m 标明，调用参数统一以 json 格式写到 agrs 参数中，格式为：  
@@ -47,7 +47,7 @@ $ sudo apt install composer
 ```
 {
     "require": {
-        "yyq/minimalist_frame": ">=0.1.0"
+        "yyq/minimum_frame": ">=0.1.0"
     }
 }
 ```
@@ -73,7 +73,7 @@ $ composer install
 <?php
 require 'vendor/autoload.php';
 // 上面为标准写法，也可以替换为下面的：
-// require_once('vendor/yyq/minimalist_frame/fxy.php');
+// require_once('vendor/yyq/minimum_frame/fxy.php');
 
 $allowed_funtion = array(
     'test',
