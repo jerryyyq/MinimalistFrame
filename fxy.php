@@ -73,7 +73,14 @@ function comm_get_default_mysql()
     return $g_YMySql;
 }
 
-function comm_create_default_memcache( $hostIP, $hostPort = 11211 )
+/**
+ * 构造默认全局 YMemcache 对象。设置 YMemcache 连接信息
+ * @param string $hostIP 服务器 IP 地址
+ * @param string $hostPort 服务器端口号
+ * @param int $expire 默认过期时间（秒）。小于 0 无效。
+ * @return null
+ */
+function comm_create_default_memcache( $hostIP, $hostPort = 11211, $expire = 0 )
 {
     global $g_YMemcache;
     if( $g_YMemcache )
@@ -81,7 +88,7 @@ function comm_create_default_memcache( $hostIP, $hostPort = 11211 )
         $g_YMemcache = null;
     }
 
-    $g_YMemcache = new YMemcache( $hostIP, $hostPort );
+    $g_YMemcache = new YMemcache( $hostIP, $hostPort, $expire );
 }
 
 function comm_get_default_memcache()
