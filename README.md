@@ -47,7 +47,7 @@ $ sudo apt install composer
 ```
 {
     "require": {
-        "yyq/minimum_frame": ">=0.1.0"
+        "yyq/minimum_frame": ">=1.0.0"
     }
 }
 ```
