@@ -41,7 +41,7 @@ require_once('YLog.php');
 require_once('YMySql.php');
 require_once('YMemcache.php');
 
-$g_YLog = new YLog;
+$g_YLog = null;
 $g_YMySql = null;
 $g_YMemcache = null;
 
@@ -50,6 +50,15 @@ define('PBKDF2_LENGTH', 512);
 
 
 //////////////////////////////////  全局默认对象 函数 ///////////////////////////////////
+function comm_create_default_log()
+{
+    global $g_YLog;
+    if( !$g_YLog )
+    {
+        $g_YLog = new YLog;
+    }
+}
+
 function comm_get_default_log()
 {
     global $g_YLog;
@@ -111,6 +120,10 @@ function comm_get_default_memcache()
  */
 function comm_frame_main( $route_functions, $parameter_method_name = 'm', $parameter_args_name = 'args' )
 {
+    // 创建全局 YLog 对象
+    comm_create_default_log();
+
+    // 定义返回值
     $result = array( 'err' => 0, 'err_msg' => '', 'data' => array() );
     
     // 设置跨域。此步骤不是必须

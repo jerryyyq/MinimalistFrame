@@ -74,6 +74,8 @@ $ composer install
 require 'vendor/autoload.php';
 // 上面为标准写法，也可以替换为下面的：
 // require_once('vendor/yyq/minimum_frame/fxy.php');
+use minimum_frame\YLog;
+
 
 // 路由函数表
 $route_functions = array(
@@ -118,7 +120,7 @@ function test( $args )
     $users = $mysql->selectDataEx( 'user', array('id', 'name'), array(1, 'yyq') );
 
     // 使用 Memcache
-    comm_get_default_memcache()->memSetValue('users', $users);
+    comm_get_default_memcache()->setValue('users', $users);
 
     // 使用 Log
     comm_get_default_log()->setLogLevel( YLog::LEVEL_WARN );
