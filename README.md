@@ -126,7 +126,7 @@ function test( $args )
     return $result;
 }
 
-function test2( $args )
+function test2( $args )和
 {
     $result = comm_check_parameters( $args, array('aaa', 'bbb') );
     if( 0 != $result['err'] )
@@ -141,8 +141,8 @@ function test2( $args )
 ```
 
 4. 配置  
-框架可以配置一套默认的全局 YMysql、YMemcache、YLog 对象，其中 YLog 已默认创建。
-YMysql 与 YMemcache 需要调用 
+框架可以配置一套默认的全局 YMysql、YMemcache、YLog 对象，其中 YLog 已默认创建。  
+YMysql 与 YMemcache 可以调用 comm_create_default_mysql 和 comm_create_default_memcache 来创建系统默认对象，也可以自己 new。
 
 ## 文件说明
 * fxy.php 主功能文件，包含有 comm_frame_main 等函数
