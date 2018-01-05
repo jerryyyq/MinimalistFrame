@@ -97,12 +97,12 @@ function comm_get_default_memcache()
  * err 为应答码，0 表示成功，其它值表示失败
  * err_msg 为具体错误信息
  * data 为返回的数据
- * @param array $allowed_funtion 允许执行的函数名
+ * @param array $route_functions 允许执行的路由函数名
  * @param string $parameter_method_name URL 中标识调用方法的变量名
  * @param string $parameter_args_name URL 中标识调用方法的参数的变量名( json 格式 )。也可以不写这个参数，而是把所有参数都用 post 方法提交
  * @return null 但会用 "json 返回值" 写页面内容
  */
-function comm_frame_main( $allowed_funtion, $parameter_method_name = 'm', $parameter_args_name = 'args' )
+function comm_frame_main( $route_functions, $parameter_method_name = 'm', $parameter_args_name = 'args' )
 {
     $result = array( 'err' => 0, 'err_msg' => '', 'data' => array() );
     
@@ -123,7 +123,7 @@ function comm_frame_main( $allowed_funtion, $parameter_method_name = 'm', $param
     
         $api_name = $_GET[$parameter_method_name];
 
-        if( !$api_name || !in_array($api_name, $allowed_funtion) || !function_exists($api_name) )
+        if( !$api_name || !in_array($api_name, $route_functions) || !function_exists($api_name) )
         {
             $result['err'] = -2;
             $result['err_msg'] = 'api_name wrong';

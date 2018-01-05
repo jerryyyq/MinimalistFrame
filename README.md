@@ -75,7 +75,8 @@ require 'vendor/autoload.php';
 // 上面为标准写法，也可以替换为下面的：
 // require_once('vendor/yyq/minimum_frame/fxy.php');
 
-$allowed_funtion = array(
+// 路由函数表
+$route_functions = array(
     'test',
     'test2'
 );
@@ -93,7 +94,7 @@ comm_create_default_memcache( $hostIP, $hostPort = 11211 );
 session_start();
 
 // 调用主路由函数
-comm_frame_main( $allowed_funtion );
+comm_frame_main( $route_functions );
 
 // 以下为实现自己的功能函数
 function test( $args )
