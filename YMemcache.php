@@ -16,9 +16,10 @@ class YMemcache
      * @access public
      * @param string $hostIP 服务器 IP 地址
      * @param string $hostPort 服务器端口号
+     * @param int $expire 默认过期时间（秒）。小于 0 无效。
      * @return null
      */
-	public function __construct( $hostIP, $hostPort = 11211 )
+	public function __construct( $hostIP, $hostPort = 11211, $expire = 0 )
 	{
         $this->m_memcache = new Memcache;
         $res = $this->m_memcache->connect($hostIP, $hostPort);
@@ -26,6 +27,8 @@ class YMemcache
         {
             throw new Exception( "Connect Memcache: {$hostIP}:{$hostPort} Fail!" );
         }
+
+        $this->setDefaultExpire( $expire );
     }
 
     public function __destruct()
@@ -36,9 +39,41 @@ class YMemcache
             $this->m_memcache = null;
         }
     }
-    
-    public function setValue( $mkey, $value, $expire = 3600 )
+
+    /**
+     * 设置默认过期时间
+     * @access public
+     * @param int $expire 默认过期时间（秒）。小于 0 无效。
+     * @return null
+     */
+    public function setDefaultExpire( $expire )
     {
+        if( 0 < intval($expire) )
+        {
+            return;
+        }
+
+        $this->m_expire = intval($expire);
+    }
+
+    public function getDefaultExpire( )
+    {
+        return $this->m_expire;
+    }
+
+    /**
+     * 设置 key value
+     * @access public
+     * @param string $mkey 服务器 IP 地址
+     * @param string $hostPort 服务器端口号
+     * @param int $expire 过期时间（秒）。如果是 -1 则使用 DefaultExpire 值。
+     * @return null
+     */
+    public function setValue( $mkey, $value, $expire = -1 )
+    {
+        if( 0 > intval($expire) )
+            $expire = $this->m_expire;
+
         return $this->m_memcache->set($mkey, $value, 0, $expire);
     }
 
@@ -58,6 +93,7 @@ class YMemcache
     }
 
     protected $m_memcache;
+    protected $m_expire;
 }
 
 ?>

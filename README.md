@@ -87,8 +87,8 @@ date_default_timezone_set('Asia/Shanghai');
 // 如果需要使用数据库，可以在这里配置
 comm_create_default_mysql( $hostName, $dbName, $userName, $password, $hostPort = 3306 );
 
-// 如果需要使用 Memcache，可以在这里配置
-comm_create_default_memcache( $hostIP, $hostPort = 11211 );
+// 如果需要使用 Memcache，可以在这里配置。本例设置默认过期时间为 1 天
+comm_create_default_memcache( $hostIP, 11211, 24 * 3600 );
 
 // 如果需要 session 需要把这行写到 comm_frame_main 函数前；如果不需要可以不写。
 session_start();
@@ -126,7 +126,7 @@ function test( $args )
     return $result;
 }
 
-function test2( $args )和
+function test2( $args )
 {
     $result = comm_check_parameters( $args, array('aaa', 'bbb') );
     if( 0 != $result['err'] )
@@ -141,8 +141,9 @@ function test2( $args )和
 ```
 
 4. 配置  
-框架可以配置一套默认的全局 YMysql、YMemcache、YLog 对象，其中 YLog 已默认创建。  
-YMysql 与 YMemcache 可以调用 comm_create_default_mysql 和 comm_create_default_memcache 来创建系统默认对象，也可以自己 new。
+框架可以配置一套默认的全局 YMysql、YMemcache、YLog 对象，其中 YLog 已默认创建，之后通过调用 comm_get_default_log() 直接使用。  
+YMysql 与 YMemcache 可以调用 comm_create_default_mysql() 和 comm_create_default_memcache() 来创建系统默认对象，之后通过调用 comm_get_default_mysql() 和 comm_get_default_memcache() 直接使用。  
+也可以自己直接 new 对象使用。
 
 ## 文件说明
 * fxy.php 主功能文件，包含有 comm_frame_main 等函数
