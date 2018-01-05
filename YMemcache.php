@@ -12,11 +12,10 @@ class YMemcache
 {
 	////////////////////////////////// 构造 与 属性 函数 /////////////////////////////////// 
     /**
-     * 构造对象，出入 PDO 连接信息
+     * 构造对象。设置 Memcache 连接信息
      * @access public
-     * @param string $dsn 连接的服务器信息
-     * @param string $userName 用户名
-     * @param string $password 口令
+     * @param string $hostIP 服务器 IP 地址
+     * @param string $hostPort 服务器端口号
      * @return null
      */
 	public function __construct( $hostIP, $hostPort = 11211 )

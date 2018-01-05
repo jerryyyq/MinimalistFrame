@@ -132,7 +132,7 @@ function comm_frame_main( $allowed_funtion, $parameter_method_name = 'm', $param
 
         $params = comm_get_parameters( $parameter_args_name );
         // if( 1 > count($params) )
-        //     log_warn( 'parameter args is empty.' );
+        //     comm_get_default_log()->logWarn( 'parameter args is empty.' );
 
         try
         { 
@@ -170,7 +170,7 @@ function comm_get_parameters( $parameter_args_name = 'args' )
         $input = @file_get_contents('php://input');
     }
 
-    log_debug( 'input is: ' . $input );
+    // comm_get_default_log()->logDebug( 'input is: ' . $input );
     $params = json_decode($input, true);
     return $params; 
 }
