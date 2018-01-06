@@ -40,6 +40,7 @@ class YMySql
 
     public function getLastInsertID()
     {
+        $this->m_lastInsertID = $this->m_pdo->lastInsertId();
         return $this->m_lastInsertID;
     }
 
@@ -88,7 +89,7 @@ class YMySql
             $values[] = $value;
         }
     
-        $row[$primaryKeyName] = $this->m_lastInsertID = $this->insertData( $table, $fields, $values );
+        $row[$primaryKeyName] = $this->insertData( $table, $fields, $values );
         return $row[$primaryKeyName];
     }
 
@@ -204,8 +205,7 @@ class YMySql
         if( !$this->executeSql($sql, $values) )
             return 0;
 
-        $this->m_lastInsertID = $this->m_pdo->lastInsertId();
-        return $this->m_lastInsertID;
+        return $this->getLastInsertID();
     }
 
     /**
