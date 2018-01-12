@@ -304,7 +304,9 @@ function comm_get_domain_uri()
 // 返回当前 URL 中协议和路径的部分
 function comm_get_current_path_uri()
 {
-    return comm_get_domain_uri() . $_SERVER['REQUEST_URI'];
+    $find = strrpos($_SERVER['SCRIPT_NAME'], '/');
+    $path = substr($_SERVER['SCRIPT_NAME'], 0, $find + 1);
+    return comm_get_domain_uri() . $path;
 }
 
 // 返回当前 URL 中不带参数的部分

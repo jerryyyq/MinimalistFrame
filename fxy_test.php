@@ -39,9 +39,12 @@ $mysql->updateDataEx( 'users', $user, 'id' );
 $user['name'] = 'delete';
 $user['email'] = 'delete@sina.com';
 $mysql->insertDataEx( 'users', $user, 'id' );
-echo 'insert delete users id = ' . $user['id'];
+echo 'insert delete users id = ' . $user['id'] . "\n";
 
 $mysql->deleteData( 'users', 'id = ?', array($user['id']) );
 
+$_SERVER['HTTP_HOST'] = 'www.aaa.com/';
+$_SERVER['SCRIPT_NAME'] = '/fjkdsl/jfdislajf/aaa.php';
+echo comm_get_current_path_uri(), "\n";
 
 ?>
