@@ -143,7 +143,7 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
     // 设置跨域。此步骤不是必须
     if( 0 == comm_make_xcros() )
     {
-        comm_get_default_log()->logWarn( 'comm_make_xcros fail' );
+        exit(0);
     }
 
     while(true)
