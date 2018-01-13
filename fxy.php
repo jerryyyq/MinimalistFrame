@@ -44,6 +44,7 @@ require_once('YMemcache.php');
 $g_YLog = null;
 $g_YMySql = null;
 $g_YMemcache = null;
+$g_run_config = array('log_io' => false);
 
 define('PBKDF2_ITERATIONS', 1000);
 define('PBKDF2_LENGTH', 512);
@@ -106,6 +107,18 @@ function comm_get_default_memcache()
     return $g_YMemcache;
 }
 
+// 设置运行期配置
+// 目前支持的有：'log_io'，默认为 false，如果设置为 true 可以以 logDebug 方式记录：调用方法、参数、返回值
+function comm_set_run_config( $run_config )
+{
+    global $g_run_config;
+
+    foreach( $run_config as $key => $value )
+    {
+        $g_run_config[$key] = $value;
+    }
+}
+
 ////////////////////////////////// 框架运行 主 函数 ///////////////////////////////////
 /**
  * 框架主路由函数
@@ -120,6 +133,7 @@ function comm_get_default_memcache()
  */
 function comm_frame_main( $route_functions, $parameter_method_name = 'm', $parameter_args_name = 'args' )
 {
+    global $g_run_config;
     // 创建全局 YLog 对象
     comm_create_default_log();
 
@@ -150,9 +164,12 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
             break;
         }
 
+        if( $g_run_config['log_io'] )
+        {
+            comm_get_default_log()->logDebug( 'api_name is: ' . $api_name );
+        }
+
         $params = comm_get_parameters( $parameter_args_name );
-        // if( 1 > count($params) )
-        //     comm_get_default_log()->logWarn( 'parameter args is empty.' );
 
         try
         { 
@@ -167,7 +184,13 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
         break;
     }
 
-    echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    $output = json_encode($result, JSON_UNESCAPED_UNICODE);
+    if( $g_run_config['log_io'] )
+    {
+        comm_get_default_log()->logDebug( 'output is: ' . $output );
+    }
+
+    echo $output;
 }
 
 /**
@@ -177,6 +200,8 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
  */
 function comm_get_parameters( $parameter_args_name = 'args' )
 {
+    global $g_run_config;
+
     if( $raw_arg = @$_REQUEST[$parameter_args_name] )
     {
         // 获取 url 后面的参数
@@ -190,7 +215,11 @@ function comm_get_parameters( $parameter_args_name = 'args' )
         $input = @file_get_contents('php://input');
     }
 
-    // comm_get_default_log()->logDebug( 'input is: ' . $input );
+    if( $g_run_config['log_io'] )
+    {
+        comm_get_default_log()->logDebug( 'input is: ' . $input );
+    }
+
     $params = json_decode($input, true);
     return $params; 
 }

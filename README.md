@@ -92,6 +92,9 @@ comm_create_default_mysql( $hostName, $dbName, $userName, $password, $hostPort =
 // 如果需要使用 Memcache，可以在这里配置。本例设置默认过期时间为 1 天
 comm_create_default_memcache( $hostIP, 11211, 24 * 3600 );
 
+// 设置：将 调用方法、参数、返回值 写入日志
+comm_set_run_config( array('log_io' => true) );
+
 // 如果需要 session 需要把这行写到 comm_frame_main 函数前；如果不需要可以不写。
 session_start();
 
