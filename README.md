@@ -11,6 +11,8 @@
   * 参数签名检查
   * password 标准生成方法
   * 以 json 封装的统一格式的输入与输出
+  * 可配置的跨域开关
+  * 可配置的调用记录（函数名、入参、返回值）
 
 * composer 注册在： https://packagist.org/packages/yyq/minimum_frame
 
@@ -94,6 +96,10 @@ comm_create_default_memcache( $hostIP, 11211, 24 * 3600 );
 
 // 设置：将 调用方法、参数、返回值 写入日志
 comm_set_run_config( array('log_io' => true) );
+
+// 设置：允许跨域访问
+comm_set_run_config( array('cross_origin' => true) );
+
 
 // 如果需要 session 需要把这行写到 comm_frame_main 函数前；如果不需要可以不写。
 session_start();

@@ -44,7 +44,7 @@ require_once('YMemcache.php');
 $g_YLog = null;
 $g_YMySql = null;
 $g_YMemcache = null;
-$g_run_config = array('log_io' => false);
+$g_run_config = array('log_io' => false, 'cross_origin' => false);
 
 define('PBKDF2_ITERATIONS', 1000);
 define('PBKDF2_LENGTH', 512);
@@ -108,7 +108,9 @@ function comm_get_default_memcache()
 }
 
 // 设置运行期配置
-// 目前支持的有：'log_io'，默认为 false，如果设置为 true 可以以 logDebug 方式记录：调用方法、参数、返回值
+// 目前支持的有：
+// 1 'log_io'，默认为 false，如果设置为 true 会以 logDebug 方式记录：调用方法、参数、返回值
+// 2 'cross_origin', 默认为 false，如果设置为 true 会允许跨域访问
 function comm_set_run_config( $run_config )
 {
     global $g_run_config;
@@ -140,10 +142,13 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
     // 定义返回值
     $result = array( 'err' => 0, 'err_msg' => '', 'data' => array() );
     
-    // 设置跨域。此步骤不是必须
-    if( 0 == comm_make_xcros() )
+    // 设置跨域。
+    if( $g_run_config['cross_origin'] )
     {
-        exit(0);
+        if( 0 == comm_make_xcros() )
+        {
+            exit(0);
+        }
     }
 
     while(true)
