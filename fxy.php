@@ -380,7 +380,8 @@ function comm_get_password_hash( $password, &$salt )
 {
     if( 1 > strlen($salt) )
     {
-        $salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM);
+        // $salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM); // php 7 废弃
+        $salt = random_bytes(22);
         $salt = base64_encode($salt);
         $salt = str_replace('+', '.', $salt);
     }

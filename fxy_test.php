@@ -47,4 +47,9 @@ $_SERVER['HTTP_HOST'] = 'www.aaa.com/';
 $_SERVER['SCRIPT_NAME'] = '/fjkdsl/jfdislajf/aaa.php';
 echo comm_get_current_path_uri(), "\n";
 
+
+$salt = '';
+$hash = comm_get_password_hash('1234567', $salt);
+echo 'password_hash salt = ' . $salt . ' hash = ' . $hash . "\n";
+
 ?>
