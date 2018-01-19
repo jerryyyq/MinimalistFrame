@@ -492,10 +492,10 @@ function comm_xml_to_array( $xml )
 * @access protected
 * @param string $url 目标 URL 地址
 * @param array $data 需要提交的数据
-* @param bool $to_json 提交的数据和返回值都使用 json 格式
-* @return mixed 如果 $to_json 为 true, 那么返回为 array 类型，即：把网站返回的 json 数据转为数组返回； 如果 $to_json 为 false，那么直接把网站返回的内容返回，为 string 类型。
+* @param string $data_type 为 '' 以原始格式提交和返回数据； 为 'json' 提交和和返回数据都是 json 格式； 为 'xml' 提交和和返回数据都是 xml 格式
+* @return mixed 如果 $data_type 为 '', 那么直接把网站返回的内容返回，为 string 类型； 其他情况 返回为 array 类型
 */
-function comm_post_to_url( $url, $data, $to_json = true )
+function comm_post_to_url( $url, $data, $data_type = '' )
 {
     $opts = array (
         'http' => array (
@@ -503,23 +503,32 @@ function comm_post_to_url( $url, $data, $to_json = true )
         )
     );
 
-    if( $to_json )
+    if( 'xml' == $data_type )
+    {
+        $post_data = comm_array_to_xml($data);
+        $opts['http']['header'] = "Content-type: text/xml\r\ncharset: utf-8\r\n" . 'Content-Length: ' . strlen($post_data) . "\r\n";
+    }
+    else if( 'json' == $data_type )
     {
         $post_data = json_encode($data, JSON_UNESCAPED_UNICODE);
         $opts['http']['header'] = "Content-type: application/json\r\n" . 'Content-Length: ' . strlen($post_data) . "\r\n";
-
     }
     else
     {
         $post_data = http_build_query($data);
         $opts['http']['header'] = "Content-type: application/x-www-form-urlencodedrn\r\n" . 'Content-Length: ' . strlen($post_data) . "\r\n";
     }
+
     $opts['http']['content'] = $post_data;
 
     $context = stream_context_create($opts);
     $res = file_get_contents($url, false, $context);
 
-    if( $to_json )
+    if( 'xml' == $data_type )
+    {
+        return comm_xml_to_array( $res );
+    }
+    else if( 'json' == $data_type )
     {
         return json_decode($res, true);
     }
