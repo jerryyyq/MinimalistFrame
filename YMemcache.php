@@ -48,12 +48,14 @@ class YMemcache
      */
     public function setDefaultExpire( $expire )
     {
-        if( 0 < intval($expire) )
+        if( 0 > intval($expire) )
         {
-            return;
+            $this->m_expire = 0;
         }
-
-        $this->m_expire = intval($expire);
+        else
+        {
+            $this->m_expire = intval($expire);
+        }
     }
 
     public function getDefaultExpire( )
