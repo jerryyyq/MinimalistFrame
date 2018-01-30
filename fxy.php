@@ -524,18 +524,22 @@ function comm_post_to_url( $url, $data, $data_type = '' )
     $context = stream_context_create($opts);
     $res = file_get_contents($url, false, $context);
 
+    $result = '';
     if( 'xml' == $data_type )
     {
-        return comm_xml_to_array( $res );
+        $result = comm_xml_to_array( $res );
     }
     else if( 'json' == $data_type )
     {
-        return json_decode($res, true);
+        $result = json_decode($res, true);
     }
-    else
+
+    if( '' == $result || !is_array($result) )
     {
-        return $res;
+        $result = $res;
     }
+
+    return $result;
 }
 
 ?>
