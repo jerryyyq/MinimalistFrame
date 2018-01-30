@@ -143,7 +143,7 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
     $result = array( 'err' => 0, 'err_msg' => '', 'data' => array() );
     
     // 设置跨域。
-    if( $g_run_config['cross_origin'] )
+    if( isset($g_run_config['cross_origin']) && $g_run_config['cross_origin'] )
     {
         if( 0 == comm_make_xcros() )
         {
