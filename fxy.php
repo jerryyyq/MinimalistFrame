@@ -143,7 +143,7 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
     $result = array( 'err' => 0, 'err_msg' => '', 'data' => array() );
     
     // 设置跨域。
-    if( $g_run_config['cross_origin'] )
+    if( isset($g_run_config['cross_origin']) and $g_run_config['cross_origin'] )
     {
         if( 0 == comm_make_xcros() )
         {
@@ -169,7 +169,7 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
             break;
         }
 
-        if( $g_run_config['log_io'] )
+        if( isset($g_run_config['log_io']) and $g_run_config['log_io'] )
         {
             comm_get_default_log()->logDebug( 'api_name is: ' . $api_name );
         }
@@ -190,7 +190,7 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
     }
 
     $output = json_encode($result, JSON_UNESCAPED_UNICODE);
-    if( $g_run_config['log_io'] )
+    if( isset($g_run_config['log_io']) and $g_run_config['log_io'] )
     {
         comm_get_default_log()->logDebug( 'output is: ' . $output );
     }
@@ -220,7 +220,7 @@ function comm_get_parameters( $parameter_args_name = 'args' )
         $input = @file_get_contents('php://input');
     }
 
-    if( $g_run_config['log_io'] )
+    if( isset($g_run_config['log_io']) and $g_run_config['log_io'] )
     {
         comm_get_default_log()->logDebug( 'input is: ' . $input );
     }
