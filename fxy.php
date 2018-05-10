@@ -140,7 +140,7 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
     comm_create_default_log();
 
     // 定义返回值
-    $result = array( 'err' => 0, 'err_msg' => '', 'data' => array() );
+    $result = array( 'err' => 0, 'err_msg' => '' );
     
     // 设置跨域。
     if( isset($g_run_config['cross_origin']) and $g_run_config['cross_origin'] )
@@ -150,6 +150,8 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
             exit(0);
         }
     }
+
+    header('Content-type: application/json');
 
     while(true)
     {
@@ -238,7 +240,7 @@ function comm_get_parameters( $parameter_args_name = 'args' )
  */
 function comm_check_parameters( $args, $mast_exist_parameters )
 {
-    $result = array('err' => 0, 'err_msg' => '', 'data' => array() );
+    $result = array( 'err' => 0, 'err_msg' => '' );
     foreach( $mast_exist_parameters as $k => $v )
     {
         if( !isset($args[$v]) )
