@@ -247,7 +247,7 @@ function comm_check_parameters( $args, $mast_exist_parameters )
             $result['data'][] = $v;
     }
 
-    if( 0 < count($result['data']) )
+    if( isset($result['data']) && 0 < count($result['data']) )
     {
         $result['err'] = -3;
         $result['err_msg'] = 'Parameter incomplete';
