@@ -58,6 +58,7 @@ function comm_create_default_log()
     {
         $g_YLog = new YLog;
     }
+    return $g_YLog;
 }
 
 function comm_get_default_log()
@@ -75,6 +76,7 @@ function comm_create_default_mysql( $hostName, $dbName, $userName, $password, $h
     }
 
     $g_YMySql = new YMySql( $hostName, $dbName, $userName, $password, $hostPort );
+    return $g_YMySql;
 }
 
 function comm_get_default_mysql()
@@ -99,6 +101,7 @@ function comm_create_default_memcache( $hostIP, $hostPort = 11211, $expire = 0 )
     }
 
     $g_YMemcache = new YMemcache( $hostIP, $hostPort, $expire );
+    return $g_YMemcache;
 }
 
 function comm_get_default_memcache()

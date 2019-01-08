@@ -153,9 +153,34 @@ class YMySql
     }
 
     /////////////////////////////////// 低级函数 ///////////////////////////////////
+    public function _check_sql_injection($sql)
+    {
+        // 先将移位运算符替换掉，不参与检查
+        $temp1 = preg_replace('/(>\s*>|<\s*<)/', '@@', $sql);
+        // 将所有的 SQL 运算符(==, =, !=, <>, >, <, >=, <=, !<, !>)及其两边的空格全部替换为 '='
+        $temp2 = preg_replace('/\s*[=!<>]\s*/', '=', $temp1); // preg_replace('/\s*(==|=|!=|<>|>|<|>=|<=|!<|!>)\s*/', '=', $temp1);
+        // 将连续的多个 '=' 替换为一个 '='
+        $check = preg_replace('/[=]+/', '=', $temp2);
+
+        // 检查等号右边的字符是不是 '?'
+        $times = preg_match('/=[^?]/', $check);
+        if(0 == $times)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
     // 返回 bool 值
     public function executeSql($sql, $bindParam = array() )
     {
+        if( !_check_sql_injection($sql) )
+        {
+            return false;
+        }
+
         $this->m_stmt = null;
         $this->m_stmt = $this->m_pdo->prepare( $sql );
 
