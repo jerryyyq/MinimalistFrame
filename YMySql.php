@@ -8,6 +8,9 @@
 namespace minimum_frame;
 use \PDO;
 
+$g_run_config = array('log_io' => false, 'cross_origin' => false, 'sql_injecte_loose' => false);
+
+
 class YMySql
 {
 	////////////////////////////////// 构造 与 属性 函数 /////////////////////////////////// 
@@ -155,6 +158,8 @@ class YMySql
     /////////////////////////////////// 低级函数 ///////////////////////////////////
     public function _check_sql_injection($sql)
     {
+        global $g_run_config;
+
         // 先将移位运算符替换掉，不参与检查
         $temp1 = preg_replace('/(>\s*>|<\s*<)/', '@@', $sql);
         // 将所有的 SQL 运算符(==, =, !=, <>, >, <, >=, <=, !<, !>)及其两边的空格全部替换为 '='
@@ -162,11 +167,24 @@ class YMySql
         // 将连续的多个 '=' 替换为一个 '='
         $check = preg_replace('/[=]+/', '=', $temp2);
 
-        // 检查等号右边的字符是不是 '?'
-        $times = preg_match('/=[^?]/', $check);
-        if(0 == $times)
+        if( isset($g_run_config['sql_injecte_loose']) and $g_run_config['sql_injecte_loose'] )
         {
-            return true;
+            // 宽松模式，只要求运算符右边不是数字，可能会有安全风险
+            $times = preg_match('/=[0-9]/', $check);
+            if(0 == $times)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            // 严格模式，要求运算符右边必须是 '?'，所有右侧的值必须写到 $bindParam 中，可能会带来写 SQL 的不灵活
+            // 检查等号右边的字符是不是 '?'
+            $times = preg_match('/=[^?]/', $check);
+            if(0 == $times)
+            {
+                return true;
+            }
         }
 
         return false;
