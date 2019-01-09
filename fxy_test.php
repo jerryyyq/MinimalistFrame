@@ -1,12 +1,12 @@
 <?php
-include_once('fxy.php');
+require_once('fxy.php');
 use minimum_frame\YLog;
 
 echo '-', __NAMESPACE__, '-<br />', "\n"; 
 
 comm_set_run_config( array('sql_injecte_loose' => true) );
 
-comm_create_default_log();
+
 comm_get_default_log()->setLogLevel( YLog::LEVEL_WARN );
 echo comm_get_default_log()->getLogLevel( );
 comm_get_default_log()->logError( 'fxy_test' );

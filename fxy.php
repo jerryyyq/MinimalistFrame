@@ -32,103 +32,10 @@
 * error_log = D:/usr/local/apache2/logs/php_error.log
 *
 */
-
-use minimum_frame\YLog;
-use minimum_frame\YMySql;
-use minimum_frame\YMemcache;
-
-require_once('YLog.php');
-require_once('YMySql.php');
-require_once('YMemcache.php');
-
-$g_YLog = null;
-$g_YMySql = null;
-$g_YMemcache = null;
+require_once('YGlobal.php');
 
 define('PBKDF2_ITERATIONS', 1000);
 define('PBKDF2_LENGTH', 512);
-
-
-//////////////////////////////////  全局默认对象 函数 ///////////////////////////////////
-function comm_create_default_log()
-{
-    global $g_YLog;
-    if( !$g_YLog )
-    {
-        $g_YLog = new YLog;
-    }
-    return $g_YLog;
-}
-
-function comm_get_default_log()
-{
-    global $g_YLog;
-    return $g_YLog;
-}
-
-function comm_create_default_mysql( $hostName, $dbName, $userName, $password, $hostPort = 3306 )
-{
-    global $g_YMySql;
-    if( $g_YMySql )
-    {
-        $g_YMySql = null;
-    }
-
-    $g_YMySql = new YMySql( $hostName, $dbName, $userName, $password, $hostPort );
-    return $g_YMySql;
-}
-
-function comm_get_default_mysql()
-{
-    global $g_YMySql;
-    return $g_YMySql;
-}
-
-/**
- * 构造默认全局 YMemcache 对象。设置 YMemcache 连接信息
- * @param string $hostIP 服务器 IP 地址
- * @param string $hostPort 服务器端口号
- * @param int $expire 默认过期时间（秒）。小于 0 无效。
- * @return null
- */
-function comm_create_default_memcache( $hostIP, $hostPort = 11211, $expire = 0 )
-{
-    global $g_YMemcache;
-    if( $g_YMemcache )
-    {
-        $g_YMemcache = null;
-    }
-
-    $g_YMemcache = new YMemcache( $hostIP, $hostPort, $expire );
-    return $g_YMemcache;
-}
-
-function comm_get_default_memcache()
-{
-    global $g_YMemcache;
-    return $g_YMemcache;
-}
-
-/**
- * 设置运行期配置
- * @param array $run_config
- * 目前支持的有：
- * 1 'log_io'，默认为 false，如果设置为 true 会以 logDebug 方式记录：调用方法、参数、返回值。
- * 2 'cross_origin', 默认为 false，如果设置为 true 会允许跨域访问。
- * 3 'sql_injecte_loose', 默认为 false，以严格模式检查 SQL 语句，要求运算符右边必须是 '?'；
- *        如果设置为 true 会以宽松模式检查 SQL 语句，只要运算符右侧不是数字就可以通过。
- * 
- * @return null
- */
-function comm_set_run_config( $run_config )
-{
-    global $g_run_config;
-
-    foreach( $run_config as $key => $value )
-    {
-        $g_run_config[$key] = $value;
-    }
-}
 
 ////////////////////////////////// 框架运行 主 函数 ///////////////////////////////////
 /**
@@ -145,8 +52,6 @@ function comm_set_run_config( $run_config )
 function comm_frame_main( $route_functions, $parameter_method_name = 'm', $parameter_args_name = 'args' )
 {
     global $g_run_config;
-    // 创建全局 YLog 对象
-    comm_create_default_log();
 
     // 定义返回值
     $result = array( 'err' => 0, 'err_msg' => '' );

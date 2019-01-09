@@ -8,8 +8,7 @@
 namespace minimum_frame;
 use \PDO;
 
-$g_run_config = array('log_io' => false, 'cross_origin' => false, 'sql_injecte_loose' => false);
-
+require_once('YGlobal.php');
 
 class YMySql
 {
@@ -196,6 +195,7 @@ class YMySql
     {
         if( !_check_sql_injection($sql) )
         {
+            comm_get_default_log()->logError( " _check_sql_injection fail! sql = " . $sql . "\n" );
             return false;
         }
 

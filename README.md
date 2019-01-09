@@ -4,7 +4,7 @@
 * 包含的功能如下：
   * 数据库支持
   * Memcache 支持
-  * log 支持
+  * log 支持，默认日志文件路径在 /tmp/phplogs/ 目录下
   * 函数路由
   * 方法名检查
   * 参数检查
@@ -13,6 +13,7 @@
   * 以 json 封装的统一格式的输入与输出
   * 可配置的跨域开关
   * 可配置的调用记录（函数名、入参、返回值）
+  * 可配置的 SQL 注入检测模式（严格、宽松）
 
 * composer 注册在： https://packagist.org/packages/yyq/minimum_frame
 
@@ -100,6 +101,8 @@ comm_set_run_config( array('log_io' => true) );
 // 设置：允许跨域访问
 comm_set_run_config( array('cross_origin' => true) );
 
+// 设置：以宽松模式检查 SQL 语句
+comm_set_run_config( array('sql_injecte_loose' => true) );
 
 // 如果需要 session 需要把这行写到 comm_frame_main 函数前；如果不需要可以不写。
 session_start();
