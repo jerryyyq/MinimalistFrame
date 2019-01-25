@@ -193,7 +193,7 @@ class YMySql
     // 返回 bool 值
     public function executeSql($sql, $bindParam = array() )
     {
-        if( !_check_sql_injection($sql) )
+        if( !$this->_check_sql_injection($sql) )
         {
             comm_get_default_log()->logError( " _check_sql_injection fail! sql = " . $sql . "\n" );
             return false;
