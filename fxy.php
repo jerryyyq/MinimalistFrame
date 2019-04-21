@@ -49,7 +49,7 @@ define('PBKDF2_LENGTH', 512);
  * @param string $parameter_args_name URL 中标识调用方法的参数的变量名( json 格式 )。也可以不写这个参数，而是把所有参数都用 post 方法提交
  * @return null 但会用 "json 返回值" 写页面内容
  */
-function comm_frame_main( $route_functions, $parameter_method_name = 'm', $parameter_args_name = 'args' )
+function comm_frame_main( $route_functions, $parameter_method_name = 'm', $parameter_args_name = 'a' )
 {
     global $g_run_config;
 
@@ -115,11 +115,11 @@ function comm_frame_main( $route_functions, $parameter_method_name = 'm', $param
 }
 
 /**
- * 内部函数。获取上传参数。首先以 GET 方法获取 'args' 参数，如果没获得，那么获取 body 中的参数
+ * 内部函数。获取上传参数。首先以 GET 方法获取 'a' 参数，如果没获得，那么获取 body 中的参数
  * @param string $parameter_args_name URL 中标识调用方法的参数的变量名( json 格式 )。也可以不写这个参数，而是把所有参数都用 post 方法提交
  * @return array 返回参数数组
  */
-function comm_get_parameters( $parameter_args_name = 'args' )
+function comm_get_parameters( $parameter_args_name = 'a' )
 {
     global $g_run_config;
 

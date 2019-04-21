@@ -18,9 +18,9 @@
 * composer 注册在： https://packagist.org/packages/yyq/minimum_frame
 
 ## URL 调用接口
-一个 location 支持多个 api 调用，调用的 api 名称由 URL 参数 m 标明，调用参数统一以 json 格式写到 agrs 参数中，格式为：  
-http://域名/myapi?m=api名&args={"aaa":1,"bbb":2}  
-例如：http://my.com/myapi?m=test2&args={"aaa":1,"bbb":2}
+一个 location 支持多个 api 调用，调用的 api 名称由 URL 参数 m 标明，调用参数统一以 json 格式写到 a 参数中，格式为：  
+http://域名/myapi?m=api名&a={"aaa":1,"bbb":2}  
+例如：http://my.com/myapi?m=test2&a={"aaa":1,"bbb":2}
 
 ## 返回值
 * 所有的应答返回值都封装到 json 串中，格式如下：{"err":0, "err_msg":"", "data":{}}
