@@ -225,6 +225,34 @@ class YMySql
 
         return $this->m_stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * 获得检索结果个数
+     * @access public
+     * @param string $table 表名
+     * @param string $where WHERE 条件内容
+     * @param array $whereValues WHERE 条件对应的值
+     * @return int 检索结果个数
+     */
+    public function getCount( $table_name, $where = '', $whereValues = array() )
+    {
+        $sql = "SELECT COUNT(*) AS count FROM {$table_name} WHERE {$where}";
+        if( 1 > strlen($where) )
+        {
+            $sql = "SELECT COUNT(*) AS count FROM {$table_name}";
+            $whereValues = array();
+        }
+
+        $rows = $this->selectData( $sql, $whereValues ); 
+        if( !isset($rows[0]) )
+        {
+            comm_get_default_log()->logError( $sql . "\n" . implode( ', ', $whereValues) );
+            return 0;
+        }
+    
+        $count = $rows[0]['count'];
+        return intval($count);
+    }
     
     /**
      * 插入数据

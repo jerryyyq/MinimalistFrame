@@ -43,6 +43,11 @@ $user['email'] = 'delete@sina.com';
 $mysql->insertDataEx( 'users', $user, 'id' );
 echo 'insert delete users id = ' . $user['id'] . "\n";
 
+$count = $mysql->getCount( 'users' );
+echo "total user count = {$count}\n";
+$count = $mysql->getCount( 'users', 'id = ?', array($user['id']) );
+echo "user id = {$user['id']}, count = {$count}\n";
+
 $mysql->deleteData( 'users', 'id = ?', array($user['id']) );
 
 $_SERVER['HTTP_HOST'] = 'www.aaa.com/';
