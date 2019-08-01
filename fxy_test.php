@@ -48,6 +48,10 @@ echo "total user count = {$count}\n";
 $count = $mysql->getCount( 'users', 'id = ?', array($user['id']) );
 echo "user id = {$user['id']}, count = {$count}\n";
 
+$user3 = $mysql->selectOne( 'users' );
+echo "user3:\n";
+print_r( $user3 );
+
 $mysql->deleteData( 'users', 'id = ?', array($user['id']) );
 
 $_SERVER['HTTP_HOST'] = 'www.aaa.com/';

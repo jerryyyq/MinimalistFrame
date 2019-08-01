@@ -48,7 +48,7 @@ class YMySql
 
     /////////////////////////////////// 高级函数 ///////////////////////////////////
     /**
-     * 构造对象，出入 PDO 连接信息
+     * 检索数据
      * @access public
      * @param string $table 表名
      * @param array $whereFields WHERE 字段名
@@ -67,6 +67,34 @@ class YMySql
         }
 
         return $this->selectData($sql, $whereValues);
+    }
+
+    /**
+     * 检索一条数据
+     * @access public
+     * @param string $table 表名
+     * @param array $whereFields WHERE 字段名
+     * @param array $whereValues WHERE 条件对应的值
+     * @return array() 一行结果
+     */
+    public function selectOne( $table, $whereFields = array(), $whereValues = array() )
+    {
+        $sql = "SELECT * FROM {$table}";
+        for( $i = 0; $i < count($whereFields); $i++ )
+        {
+            if( 0 === $i )
+                $sql = $sql . " WHERE {$whereFields[$i]} = ?";
+            else
+                $sql = $sql . " AND {$whereFields[$i]} = ?";
+        }
+
+        $sql = $sql . " LIMIT 1";
+
+        $result = $this->selectData($sql, $whereValues);
+        if( 1 > count($result) )
+            return array();
+        else
+            return $result[0];
     }
 
     /**
